@@ -29,11 +29,12 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     // Permitir acceso sin autenticación a las rutas públicas:
-                    .requestMatchers("/api/users/register").permitAll() // <-- CLAVE: Permite tu registro
+                    .requestMatchers("/api/users/register").permitAll() // Permite tu registro
                     .requestMatchers("/api/users/login").permitAll()    // Permite el login
                     .requestMatchers("/api/users/password").permitAll() // Permite la recuperación de contraseña
                     .requestMatchers("/api/products").permitAll()       // Permite ver la lista de productos (GET)
                     .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll() // Permite obtener el id del usuario para ver su perfil
+                    .requestMatchers(HttpMethod.PUT, "/api/users/**").permitAll()
                     // Para todas las demás rutas, se requiere autenticación:
                     .anyRequest().authenticated()
             }
