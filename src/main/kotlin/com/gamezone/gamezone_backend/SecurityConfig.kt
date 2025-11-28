@@ -28,6 +28,11 @@ class SecurityConfig {
             // 3. Definir las reglas de autorización
             .authorizeHttpRequests { auth ->
                 auth
+
+                    .requestMatchers("/").permitAll()
+                    // Permisos para Swagger
+                    .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
                     // Permitir acceso sin autenticación a las rutas públicas:
                     .requestMatchers("/api/users/register").permitAll() // Permite tu registro
                     .requestMatchers("/api/users/login").permitAll()    // Permite el login
@@ -36,7 +41,7 @@ class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll() // Permite obtener el id del usuario para ver su perfil
                     .requestMatchers(HttpMethod.PUT, "/api/users/**").permitAll()
                     // Para todas las demás rutas, se requiere autenticación:
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
             }
 
             // 4. Deshabilitar la configuración de autenticación básica que Spring Security habilita por defecto
