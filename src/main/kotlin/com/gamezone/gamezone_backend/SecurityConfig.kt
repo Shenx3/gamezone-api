@@ -28,6 +28,10 @@ class SecurityConfig {
             // 3. Definir las reglas de autorización
             .authorizeHttpRequests { auth ->
                 auth
+                    // Permisos para swagger
+                    .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/api/users/**").permitAll()
+
                     // Permitir acceso sin autenticación a las rutas públicas:
                     .requestMatchers("/api/users/register").permitAll() // Permite tu registro
                     .requestMatchers("/api/users/login").permitAll()    // Permite el login

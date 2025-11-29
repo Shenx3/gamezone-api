@@ -78,4 +78,14 @@ class UserController(private val userRepository: UserRepository) {
         userRepository.save(updatedUser)
         return ResponseEntity.ok(MessageResponse("Foto de perfil actualizada."))
     }
+    // 6. ELIMINAR USUARIO (DELETE) -> /api/users/{userId}
+    @DeleteMapping("/{userId}")
+    fun deleteUser(@PathVariable userId: Long): ResponseEntity<MessageResponse> {
+        return if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId)
+            ResponseEntity.ok(MessageResponse("Usuario eliminado correctamente.", userId))
+        } else {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageResponse("Usuario no encontrado."))
+        }
+    }
 }
