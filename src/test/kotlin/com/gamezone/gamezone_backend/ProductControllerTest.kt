@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.jdbc.core.JdbcTemplate
 
 /**
  * Test de la capa web para ProductController.
@@ -23,23 +24,27 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 @AutoConfigureMockMvc(addFilters = false) // desactiva filtros de seguridad en los tests
 class ProductControllerTest @Autowired constructor(
     private val mockMvc: MockMvc,
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val jdbcTemplate: JdbcTemplate // Inyección de JdbcTemplate
 ) {
 
     @BeforeEach
     fun cleanDb() {
-        // Dejamos la tabla limpia antes de cada test
+        // 1. Eliminar todos los registros
         productRepository.deleteAll()
+
+
+        jdbcTemplate.execute("ALTER TABLE products AUTO_INCREMENT = 1")
     }
 
     @Test
     fun `GET api products devuelve lista de productos`() {
         // Arrange: insertamos un producto real (God of War I, del front)
         val gow1 = Product(
-            id = null,
-            title = "God of War I", // Usamos 'title' y String price
+            id = 0L,
+            title = "God of War I",
             description = "Una épica aventura de acción protagonizada por Kratos.",
-            price = "$32.990", // Usamos String price
+            price = "$32.990",
             imageUrl = "https://i.pinimg.com/736x/b0/a6/1c/b0a61c3a3be8c2626e7a20d5ff9408bd.jpg"
         )
 
