@@ -30,6 +30,8 @@ class SecurityConfig {
                 auth
                     // Permisos para swagger
                     .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.DELETE, "/api/users/**").permitAll()
 
                     // Permitir acceso sin autenticación a las rutas públicas:

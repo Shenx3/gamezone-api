@@ -7,6 +7,7 @@ import jakarta.persistence.*
 data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
+
     //definiciones
     val nombreCompleto: String,
     @Column(unique = true, nullable = false)
