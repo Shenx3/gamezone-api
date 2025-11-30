@@ -7,18 +7,17 @@ import jakarta.persistence.*
  * Esta clase se mapea a una tabla en MySQL y la usa la app móvil para mostrar los productos.
  */
 @Entity
-class Product(
+data class Product(
     /**
      * Identificador único del producto (clave primaria, autoincremental).
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-
     /**
      * Nombre del producto (ej: "Control PS5", "Mario Kart 8").
      */
-    val name: String,
+    val title: String,
 
     /**
      * Descripción breve del producto.
@@ -28,7 +27,7 @@ class Product(
     /**
      * Precio del producto.
      */
-    val price: Double,
+    val price: String,
 
     /**
      * URL de la imagen que se muestra en la app móvil.
