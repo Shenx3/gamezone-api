@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 /**
  * Test del repositorio UserRepository.
- * Verifica que findByUsername funcione correctamente.
+ * Verifica la búsqueda por identificador (email o nombre de usuario).
  */
 @DataJpaTest
 class UserRepositoryTest @Autowired constructor(
@@ -17,23 +17,34 @@ class UserRepositoryTest @Autowired constructor(
 ) {
 
     @Test
-    fun `findByUsername devuelve el usuario correcto`() {
-        // Arrange: creamos y guardamos un usuario
+    fun `findByEmailOrNombreUsuario devuelve el usuario correcto`() {
+        // Arrange: creamos y guardamos un usuario usando los nuevos campos
         val user = User(
-            id = null,
-            username = "kenkyona",
-            password = "password-encriptado",
-            role = "ROLE_USER"
+            id = 0, // El ID se inicializa a 0 o se deja el valor por defecto
+            nombreCompleto = "Kenkyona Bravo",
+            email = "kenkyona@gamezone.cl",
+            telefono = null,
+            nombreUsuario = "kenkyona", // ✅ Nuevo campo
+            contrasena = "Password123", // ✅ Nuevo campo
+            generoFavorito = "Aventura" // ✅ Nuevo campo
         )
 
         userRepository.save(user)
 
-        // Act: buscamos por username
-        val found = userRepository.findByUsername("kenkyona")
+        // Act 1: buscamos por nombreUsuario
+        val foundByUsername = userRepository.findByEmailOrNombreUsuario("kenkyona", "kenkyona")
 
-        // Assert
-        assertThat(found).isNotNull()
-        assertThat(found!!.username).isEqualTo("kenkyona")
-        assertThat(found.role).isEqualTo("ROLE_USER")
+        // Act 2: buscamos por email
+        val foundByEmail = userRepository.findByEmailOrNombreUsuario("kenkyona@gamezone.cl", "kenkyona@gamezone.cl")
+
+
+        // Assert 1 (Username)
+        assertThat(foundByUsername).isNotNull()
+        assertThat(foundByUsername!!.nombreUsuario).isEqualTo("kenkyona") // ✅ Assertions para nombreUsuario
+        assertThat(foundByUsername.email).isEqualTo("kenkyona@gamezone.cl")
+
+        // Assert 2 (Email)
+        assertThat(foundByEmail).isNotNull()
+        assertThat(foundByEmail!!.nombreUsuario).isEqualTo("kenkyona")
     }
 }

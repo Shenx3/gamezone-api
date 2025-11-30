@@ -31,6 +31,7 @@ dependencies {
 
 	// 3. Base de Datos
 	runtimeOnly("com.mysql:mysql-connector-j")
+	testImplementation("com.h2database:h2") // Para Testing
 
 	// 4. Utilidades
 	implementation("org.springframework.boot:spring-boot-starter-security")

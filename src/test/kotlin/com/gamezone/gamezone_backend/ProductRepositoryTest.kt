@@ -21,17 +21,17 @@ class ProductRepositoryTest @Autowired constructor(
         // Producto tomado desde tu frontend (FeaturedProducts)
         val product = Product(
             id = null,
-            name = "God of War I",
+            title = "God of War I",
             description = "Una épica aventura de acción protagonizada por Kratos.",
-            price = 32990.0,
+            price = "$32.990",
             imageUrl = "https://i.pinimg.com/736x/b0/a6/1c/b0a61c3a3be8c2626e7a20d5ff9408bd.jpg"
         )
 
         val saved = productRepository.save(product)
 
         assertThat(saved.id).isNotNull()
-        assertThat(saved.name).isEqualTo("God of War I")
-        assertThat(saved.price).isEqualTo(32990.0)
+        assertThat(saved.title).isEqualTo("God of War I")
+        assertThat(saved.price).isEqualTo("$32.990")
     }
 
     @Test
@@ -40,16 +40,16 @@ class ProductRepositoryTest @Autowired constructor(
         val products = listOf(
             Product(
                 id = null,
-                name = "God of War II",
+                title = "God of War II",
                 description = "Continuación de la saga.",
-                price = 39990.0,
+                price = "$39.990",
                 imageUrl = "https://i.pinimg.com/736x/a5/13/ac/a513acf7eaf24791953b3edfa75e2764.jpg"
             ),
             Product(
                 id = null,
-                name = "Resident Evil 4 Remake",
+                title = "Resident Evil 4 Remake",
                 description = "Reimaginación del clásico survival horror.",
-                price = 59990.0,
+                price = "$59.990",
                 imageUrl = "https://i.pinimg.com/736x/6c/fc/92/6cfc9279823b78bea232ef1408586ac5.jpg"
             )
         )
@@ -59,6 +59,7 @@ class ProductRepositoryTest @Autowired constructor(
         val list = productRepository.findAll()
 
         assertThat(list.size).isEqualTo(2)
-        assertThat(list.map { it.name }).contains("God of War II", "Resident Evil 4 Remake")
+        // ✅ Corregido: it.name -> it.title
+        assertThat(list.map { it.title }).contains("God of War II", "Resident Evil 4 Remake")
     }
 }

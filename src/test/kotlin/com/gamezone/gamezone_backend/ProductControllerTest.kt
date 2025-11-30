@@ -37,9 +37,9 @@ class ProductControllerTest @Autowired constructor(
         // Arrange: insertamos un producto real (God of War I, del front)
         val gow1 = Product(
             id = null,
-            name = "God of War I",
+            title = "God of War I", // Usamos 'title' y String price
             description = "Una épica aventura de acción protagonizada por Kratos.",
-            price = 32_990.0,
+            price = "$32.990", // Usamos String price
             imageUrl = "https://i.pinimg.com/736x/b0/a6/1c/b0a61c3a3be8c2626e7a20d5ff9408bd.jpg"
         )
 
@@ -53,17 +53,17 @@ class ProductControllerTest @Autowired constructor(
             .andExpect(status().isOk)
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$", hasSize<Any>(1)))
-            .andExpect(jsonPath("$[0].name").value("God of War I"))
+            .andExpect(jsonPath("$[0].title").value("God of War I")) // Verificamos 'title'
     }
 
     @Test
     fun `POST api products crea un producto`() {
-        // JSON que se envía en el body (basado en God of War II)
+        // JSON limpio y consistente con el nuevo modelo (title: String, price: String)
         val jsonBody = """
             {
-              "name": "God of War II",
+              "title": "God of War II",
               "description": "Continuación de la saga, donde Kratos busca cambiar su destino.",
-              "price": 39990.0,
+              "price": "$39.990", 
               "imageUrl": "https://i.pinimg.com/736x/a5/13/ac/a513acf7eaf24791953b3edfa75e2764.jpg"
             }
         """.trimIndent()
@@ -73,8 +73,8 @@ class ProductControllerTest @Autowired constructor(
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonBody)
         )
-            .andExpect(status().isOk) // cambia a isCreated() si tu controlador devuelve 201
+            .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").exists())
-            .andExpect(jsonPath("$.name").value("God of War II"))
+            .andExpect(jsonPath("$.title").value("God of War II")) // Verificamos 'title'
     }
 }
