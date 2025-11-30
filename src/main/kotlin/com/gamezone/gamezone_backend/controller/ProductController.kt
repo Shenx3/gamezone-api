@@ -50,18 +50,6 @@ class ProductController(private val productRepository: ProductRepository) {
         }
     }
 
-    // 5. OBTIENE UN PRODUCTO POR ID (GET) /api/products/{id}
-    @GetMapping("/{id}")
-    fun getProductById(@PathVariable id: Long): ResponseEntity<Product> {
-        val product = productRepository.findById(id)
-        return if (product.isPresent) {
-            ResponseEntity.ok(product.get())
-        } else {
-            // Devuelve 404 Not Found
-            ResponseEntity.notFound().build()
-        }
-    }
-
     /**
      * Inicializa los datos de productos destacados al iniciar el servidor (si la tabla está vacía).
      */
