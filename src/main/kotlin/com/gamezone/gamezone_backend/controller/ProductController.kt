@@ -71,6 +71,8 @@ class ProductController(private val productRepository: ProductRepository) {
     fun initData() {
         if (productRepository.count() == 0L) {
             val products = listOf(
+                Product(title = "League Of Legends", description = "MOBA Multijugador, 3 lineas mas de 300 campeones para cualquier tipo de combinacion existente.", price = "$3.990", imageUrl = "https://i.pinimg.com/736x/20/54/b6/2054b617ac11f24e23d62e05f85303d4.jpg"),
+                Product(title = "Remnant II", description = "Shooter multijugador MMORPG en el cual vas subiendo de nivel tu personaje a medida que avanzas en el extenso mundo de Remnant", price = "$24.990", imageUrl = "https://i.pinimg.com/1200x/ba/15/13/ba1513981d08c43c67f5c27053eda7cf.jpg"),
                 Product(title = "God of War I", description = "Una épica aventura de acción protagonizada por Kratos en su misión de venganza contra los dioses griegos.", price = "$32.990", imageUrl = "https://i.pinimg.com/736x/b0/a6/1c/b0a61c3a3be8c2626e7a20d5ff9408bd.jpg"),
                 Product(title = "God of War II", description = "Continuación de la saga, donde Kratos busca cambiar su destino enfrentándose a nuevos dioses y enemigos poderosos.", price = "$39.990", imageUrl = "https://i.pinimg.com/736x/a5/13/ac/a513acf7eaf24791953b3edfa75e2764.jpg"),
                 Product(title = "Resident Evil 4 Remake", description = "Reimaginación del clásico survival horror con gráficos modernos y mecánicas mejoradas.", price = "$59.990", imageUrl = "https://i.pinimg.com/736x/6c/fc/92/6cfc9279823b78bea232ef1408586ac5.jpg")
